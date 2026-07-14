@@ -1,0 +1,24 @@
+# ==========================
+# Backend (Python)
+# ==========================
+backend/.venv/
+backend/__pycache__/
+backend/*.pyc
+backend/.env
+
+# ==========================
+# Frontend (Vite / React)
+# ==========================
+frontend/node_modules/
+frontend/dist/
+
+# ==========================
+# VS Code
+# ==========================
+.vscode/
+
+# ==========================
+# Archivos del sistema
+# ==========================
+.DS_Store
+Thumbs.db

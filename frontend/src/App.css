@@ -1,0 +1,61 @@
+/* Fondo elegante y cálido */
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: linear-gradient(135deg, #fdfcfb 0%, #e2e9f0 100%);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.app {
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* Animación del reloj/spinner */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.texto-carga {
+  color: #555;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+/* El resto de tus estilos se mantienen iguales... */
+.boton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+}
+
+.imagen {
+  width: 100%;
+  max-width: 400px;
+}
+.resultado {
+  background: #c7d7eb;
+  padding: 20px;
+  border-radius: 20px;
+}
