@@ -33,7 +33,7 @@ function App() {
       const resultado = await respuesta.json();
 
       if (resultado.secure_url) {
-        // CORRECCIÓN: El orden f_png,e_background_removal es más estable para la API
+        // Transformación: convertir a PNG y quitar fondo
         const urlSinFondo = resultado.secure_url.replace(
           "/upload/",
           "/upload/f_png,e_background_removal/"
@@ -48,19 +48,17 @@ function App() {
     }
   };
 
-  const descargarImagen = async () => {
-    try {
-      const respuesta = await fetch(imagenResultado);
-      const blob = await respuesta.blob();
-      const url = URL.createObjectURL(blob);
-      const enlace = document.createElement("a");
-      enlace.href = url;
-      enlace.download = "FondoOff.png";
-      enlace.click();
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      alert("No se pudo descargar la imagen");
-    }
+  // NUEVA LÓGICA DE DESCARGA COMPATIBLE CON WEBVIEW
+  const descargarImagen = () => {
+    if (!imagenResultado) return;
+    
+    const enlace = document.createElement("a");
+    enlace.href = imagenResultado;
+    enlace.download = "FondoOff.png";
+    enlace.target = "_blank"; // Ayuda a que el WebView lo gestione como nueva ventana/descarga
+    document.body.appendChild(enlace);
+    enlace.click();
+    document.body.removeChild(enlace);
   };
 
   return (
@@ -75,15 +73,20 @@ function App() {
         onChange={subirImagen}
       />
 
-      {!imagenResultado && !procesando && (
+      {!procesando && !imagenResultado && (
         <button className="boton" onClick={seleccionarImagen}>
           📷 Subir imagen
         </button>
       )}
 
-      {procesando && <p>⏳ Quitando fondo...</p>}
+      {procesando && (
+        <div className="contenedor-carga">
+          <div className="spinner"></div>
+          <p className="texto-carga">Estamos quitando el fondo...</p>
+        </div>
+      )}
 
-      {imagenResultado && (
+      {imagenResultado && !procesando && (
         <div className="resultado">
           <img src={imagenResultado} className="imagen" alt="Sin fondo" />
           
@@ -94,9 +97,9 @@ function App() {
             <button 
               className="boton" 
               onClick={() => setImagenResultado(null)}
-              style={{ backgroundColor: "#ff4d4d" }}
+              style={{ backgroundColor: "#ff7675" }}
             >
-              🔄 Subir otra foto
+              🔄 Otra foto
             </button>
           </div>
         </div>
